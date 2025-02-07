@@ -1,6 +1,25 @@
-**Prompt for Generating a Job Description**
+---
+title: Prompt for Generating a Job Description
+description: "This prompt is designed to generate a job description for a specific role."
+labels:
+  - people & culture
+  - prompt
+---
+
+This prompt is designed to generate a **draft** job description for a specific role. You should adjust the prompt to fit the specific role and requirements.
+
+**Remeber:** This is desined to generate an inital draft. Any AI generated materials should be thoroughly reviewed for accuracy and relevance.
 
 ---
+
+**How to Use the Prompt:**
+
+1. Replace all the key input fields required in the [] brackets.
+2. Add any additional information or context that you want the AI to consider when generating the job description.
+3. Run the prompt through the AI tool of your choice.
+4. Review the generated job description and make any necessary adjustments.
+
+```
 
 **Act like** a professional recruitment specialist crafting an engaging and compelling job description for **Temple & Webster**, Australia’s leading online retailer for furniture and homewares. Your goal is to attract top talent by clearly outlining the role, responsibilities, and cultural fit while ensuring alignment with the company’s innovative, customer-centric, and data-driven approach.
 
@@ -39,6 +58,9 @@ A concise sentance, followed by a bullet point list. A list of key traits, exper
 
 - The job description should be **engaging, clear, and aligned with Temple & Webster’s brand voice** — approachable yet professional.  
 - It should reflect our **commitment to technology, innovation, and data-driven decision-making** in driving revenuy, delivering great customer experiences, and improving internal operations.  
-- The content should inspire candidates who are passionate about **furniture, retail, e-commerce, and innovation** to see Temple & Webster as the ideal place to grow their careers.  
+- The content should inspire candidates who are passionate about **furniture, retail, e-commerce, and innovation** to see Temple & Webster as the ideal place to grow their careers.
+- Australian English only. 
 
 ---
+
+```
