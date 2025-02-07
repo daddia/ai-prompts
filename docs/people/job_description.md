@@ -2,8 +2,8 @@
 title: Prompt for Generating a Job Description
 description: "This prompt is designed to generate a job description for a specific role."
 labels:
-  - people & culture
-  - prompt
+  - "people & culture"
+  - prompts
 ---
 
 This prompt is designed to generate a **draft** job description for a specific role. You should adjust the prompt to fit the specific role and requirements.
