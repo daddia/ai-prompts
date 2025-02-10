@@ -1,0 +1,29 @@
+name: Sync Documentation to Confluence
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/**'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: sudo apt-get update && sudo apt-get install -y curl pandoc jq
+
+      - name: Run Sync Script
+        env:
+          CONFLUENCE_USER: ${{ secrets.CONFLUENCE_USER }}
+          CONFLUENCE_API_TOKEN: ${{ secrets.CONFLUENCE_API_TOKEN }}
+          CONFLUENCE_SPACE: "DOCS"
+          CONFLUENCE_URL: "https://your-confluence-instance"
+        run: |
+          chmod +x scripts/sync_to_confluence.sh
+          ./scripts/sync_to_confluence.sh "$CONFLUENCE_USER" "$CONFLUENCE_API_TOKEN" "$CONFLUENCE_SPACE" "$CONFLUENCE_URL"
