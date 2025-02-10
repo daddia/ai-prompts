@@ -1,7 +1,8 @@
 {
-  "./docs/people/job_description.md": {
+  "./docs/people-and-culture/job_description.md": {
     "title": "Prompt for Generating a Job Description",
     "description": "This prompt is designed to generate a job description for a specific role.",
-    "labels": "  \"people & culture\",  prompts"
+    "labels": "  \"people & culture\",  prompts",
+    "parentId": "3403514082"
   }
 }

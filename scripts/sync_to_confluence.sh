@@ -32,15 +32,12 @@ jq -c 'to_entries[]' "$METADATA_FILE" | while read -r entry; do
 
     # Extract folder name from file path and transform it
     FOLDER_NAME=$(echo "$FILE_PATH" | sed -n 's/^\.\/docs\/\([^/]*\)\/.*/\1/p' | tr '-' ' ' | awk '{for(i=1;i<=NF;i++)sub(/./,toupper(substr($i,1,1)),$i)}1')
-    
     echo "Processing: $TITLE in folder: $FOLDER_NAME"
 
-    # Create parent folder if it doesn't exist
-    PARENT_ID=$(curl -s -u "$CONFLUENCE_USER:$CONFLUENCE_API_KEY" \
-        -X GET \
-        "$CONFLUENCE_URL/wiki/rest/api/content?spaceKey=$CONFLUENCE_SPACE&title=$FOLDER_NAME&type=page" | jq -r '.results[0].id')
-
-    if [ -z "$PARENT_ID" ] || [ "$PARENT_ID" = "null" ]; then
+    # Create or get parent folder
+    if [ -n "$PARENT_ID_STORED" ]; then
+        PARENT_ID=$PARENT_ID_STORED
+    else
         PARENT_RESPONSE=$(curl -s -u "$CONFLUENCE_USER:$CONFLUENCE_API_KEY" \
             -X POST \
             -H "Content-Type: application/json" \
@@ -50,25 +47,23 @@ jq -c 'to_entries[]' "$METADATA_FILE" | while read -r entry; do
                 \"space\": {\"key\": \"$CONFLUENCE_SPACE\"},
                 \"body\": {
                     \"storage\": {
-                        \"value\": \"<p>$FOLDER_NAME related prompts</p>\",
+                        \"value\": \"<h1>$FOLDER_NAME</h1><p>Collection of $FOLDER_NAME related prompts</p>\",
                         \"representation\": \"storage\"
                     }
                 }
             }" \
             "$CONFLUENCE_URL/wiki/rest/api/content")
         PARENT_ID=$(echo "$PARENT_RESPONSE" | jq -r '.id')
+        
+        # Update metadata with parent ID
+        jq --arg path "$FILE_PATH" --arg id "$PARENT_ID" \
+            'to_entries | map(if .key == $path then .value.parentId = $id else . end) | from_entries' \
+            "$METADATA_FILE" > "${METADATA_FILE}.tmp" && mv "${METADATA_FILE}.tmp" "$METADATA_FILE"
     fi
 
-    # Rest of the script remains the same...
-
-jq -c 'to_entries[]' "$METADATA_FILE" | while read -r entry; do
-    FILE_PATH=$(echo "$entry" | jq -r '.key')
-    TITLE=$(echo "$entry" | jq -r '.value.title')
-    DESCRIPTION=$(echo "$entry" | jq -r '.value.description')
-    LABELS=$(echo "$entry" | jq -r '.value.labels')
-    CONFLUENCE_ID=$(echo "$entry" | jq -r '.value.confluenceId // empty')
-
-    echo "Processing: $TITLE"
+    # Debug output
+    echo "Parent ID: $PARENT_ID"
+    echo "Creating child page under parent..."
 
     # Convert Markdown to HTML and properly escape for JSON
     CONTENT=$(pandoc "$FILE_PATH" -f markdown -t html | jq -sR .)
@@ -103,9 +98,11 @@ EOF
             -H "Content-Type: application/json" \
             --data "$JSON_PAYLOAD" \
             "$CONFLUENCE_URL/wiki/rest/api/content/$CONFLUENCE_ID")
-        
         echo "Updated existing page: $TITLE (ID: $CONFLUENCE_ID)"
     else
+        # Convert Markdown to HTML and properly escape for JSON
+        CONTENT=$(pandoc "$FILE_PATH" -f markdown -t html | jq -sR .)
+
         # Create new page
         JSON_PAYLOAD=$(cat <<EOF
 {

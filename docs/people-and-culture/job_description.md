@@ -1,9 +1,9 @@
 ---
-title: Prompt for Generating a Job Description
-description: "This prompt is designed to generate a job description for a specific role."
+title: Generate a Position Description
+description: "This prompt is designed to generate a position description for a specific role."
 labels:
-  - "people & culture"
-  - prompts
+  - people-and-culture
+  - aiprompts
 ---
 
 This prompt is designed to generate a **draft** job description for a specific role. You should adjust the prompt to fit the specific role and requirements.
@@ -20,6 +20,8 @@ This prompt is designed to generate a **draft** job description for a specific r
 4. Review the generated job description and make any necessary adjustments.
 
 ---
+
+**Prompt:**
 
 ``` md
 
