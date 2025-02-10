@@ -1,0 +1,68 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg
+*.egg-info/
+dist/
+build/
+venv/
+.env
+
+# Logs and Debug Files
+*.log
+*.out
+*.err
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# Virtual Environment
+.env/
+.venv/
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Git
+#.githooks/
+#.gitignore
+
+# Docs
+#internal/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+
+# Docker
+*.dockerfile
+**/docker-compose.override.yml
+
+# Node (if applicable)
+node_modules/
+package-lock.json
+
+# Test Artifacts
+coverage/
+htmlcov/
+*.cover
+
+# Security Reports
+.gitleaks.report
+
+# Dependency Scans
+snyk-report.json
+
+# Checkov
+checkov_report.json
