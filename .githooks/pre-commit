@@ -1,0 +1,5 @@
+#!/bin/bash
+# Git pre-commit hook to extract metadata before committing
+
+echo "Running metadata extraction..."
+./scripts/extract_metadata.sh
