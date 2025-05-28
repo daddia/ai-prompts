@@ -17,6 +17,12 @@ Review the shared context and configurations to identify any existing tests, tes
 **Test Libraries:** @testing-library/react MSW
 **Test Coverage:** istanbul
 
+Ensure librariies are correctly installed.
+
+```sh
+pnpm i -Dw vitest @testing-library/react msw nyc
+```
+
 ---
 
 ## **Test Directory Structure**
@@ -26,7 +32,7 @@ Review the shared context and configurations to identify any existing tests, tes
 * Separate test types (unit, integration, e2e, smoke) to control execution scope and speed
 * Keep static data in `fixtures/`
 * Keep mocks in `mocks/`
-* Centralise setup in `setup/` so your runner config stays clean and consistent across test suites.
+* Centralise setup in `setup/` to ensure runner config stays clean and consistent across all tests
 
 Below is our centralised `tests/` directory structure.
 
